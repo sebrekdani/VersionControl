@@ -19,8 +19,8 @@ namespace VaRgyak5
     
         public Form1()
         {
-            CreatePortfolio();
             InitializeComponent();
+            CreatePortfolio();            
             Ticks = context.Ticks.ToList();
             dataGridView1.DataSource = Ticks;
             List<decimal> Nyereségek = new List<decimal>();
