@@ -7,15 +7,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using VaRgyak6.Entities1;
 using VaRgyak6.MnbServiceReference;
 
 namespace VaRgyak6
 {
     public partial class Form1 : Form
     {
+        public BindingList<RateData1> Rates = new BindingList<RateData1>();
+        
         public Form1()
         {
             InitializeComponent();
+            dataGridView1.DataSource = Rates;
             GetExchangeRates();
         }
         private void GetExchangeRates() 
