@@ -19,11 +19,18 @@ namespace VaRgyak6
         public Form1()
         {
             InitializeComponent();
-            dataGridView1.DataSource = Rates;
-            GetExchangeRates();
+            RefreshData();
+
         }
-        private void GetExchangeRates() 
+
+        private void xmlFeldolgozas(string result)
         {
+            
+        }
+
+        private void RefreshData() 
+        {
+            this.Rates.Clear();
             var mnbService = new MNBArfolyamServiceSoapClient();
 
             var request = new GetExchangeRatesRequestBody()
@@ -33,8 +40,10 @@ namespace VaRgyak6
                 endDate = "2020-06-30"
             };
             var response = mnbService.GetExchangeRates(request);
-
+            dataGridView1.DataSource = Rates;
             var result = response.GetExchangeRatesResult;
+            
+            xmlFeldolgozas(result);
         }
     }
 }
