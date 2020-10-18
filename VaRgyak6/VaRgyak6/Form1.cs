@@ -21,8 +21,8 @@ namespace VaRgyak6
         public Form1()
         {
             InitializeComponent();
-            RefreshData();
             Adatmegjelenites();
+            RefreshData();
         }
 
         private void Adatmegjelenites()
@@ -66,7 +66,7 @@ namespace VaRgyak6
             }
         }
 
-        private void RefreshData() 
+        public void RefreshData() 
         {
             this.Rates.Clear();
             var mnbService = new MNBArfolyamServiceSoapClient();
@@ -78,6 +78,7 @@ namespace VaRgyak6
                 endDate = dateTimePicker2.Value.ToString()
             };
             var response = mnbService.GetExchangeRates(request);
+
             dataGridView1.DataSource = Rates;
             var result = response.GetExchangeRatesResult;
             
