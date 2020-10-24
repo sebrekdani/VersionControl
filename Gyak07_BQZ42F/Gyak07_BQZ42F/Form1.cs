@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Gyak07_BQZ42F.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,5 +17,8 @@ namespace Gyak07_BQZ42F
         {
             InitializeComponent();
         }
+        List<Person> Population = new List<Person>();
+        List<BirthProbability> BirthProbabilities = new List<BirthProbability>();
+        List<DeathProbability> DeathProbabilities = new List<DeathProbability>();
     }
 }
