@@ -32,7 +32,7 @@ namespace Gyak07_BQZ42F
 
                 for (int i = 0; i < Population.Count; i++)
                 {
-
+                    SimStep(year, Population[i]);
                 }
 
                 int nbrOfMales = (from x in Population
@@ -44,67 +44,95 @@ namespace Gyak07_BQZ42F
                 Console.WriteLine(
                     string.Format("Év:{0} Fiúk:{1} Lányok:{2}", year, nbrOfMales, nbrOfFemales));
             }
-            List<Person> GetPopulation(string csvpath)
+        }
+        public List<Person> GetPopulation(string csvpath)
+        {
+            List<Person> population = new List<Person>();
+
+            using (StreamReader sr = new StreamReader(csvpath, Encoding.Default))
             {
-                List<Person> population = new List<Person>();
-
-                using (StreamReader sr = new StreamReader(csvpath, Encoding.Default))
+                while (!sr.EndOfStream)
                 {
-                    while (!sr.EndOfStream)
+                    var line = sr.ReadLine().Split(';');
+                    population.Add(new Person()
                     {
-                        var line = sr.ReadLine().Split(';');
-                        population.Add(new Person()
-                        {
-                            BirthYear = int.Parse(line[0]),
-                            Gender = (Gender)Enum.Parse(typeof(Gender), line[1]),
-                            NbrOfChildren = int.Parse(line[2])
-                        });
-                    }
+                        BirthYear = int.Parse(line[0]),
+                        Gender = (Gender)Enum.Parse(typeof(Gender), line[1]),
+                        NbrOfChildren = int.Parse(line[2])
+                    });
                 }
-
-                return population;
             }
-            List<BirthProbability> GetBirthProbabilities(string csvpath)
+
+            return population;
+        }
+        public List<BirthProbability> GetBirthProbabilities(string csvpath)
+        {
+            List<BirthProbability> birthprob = new List<BirthProbability>();
+
+            using (StreamReader sr = new StreamReader(csvpath, Encoding.Default))
             {
-                List<BirthProbability> birthprob = new List<BirthProbability>();
-
-                using (StreamReader sr = new StreamReader(csvpath, Encoding.Default))
+                while (!sr.EndOfStream)
                 {
-                    while (!sr.EndOfStream)
+                    var line = sr.ReadLine().Split(';');
+                    birthprob.Add(new BirthProbability()
                     {
-                        var line = sr.ReadLine().Split(';');
-                        birthprob.Add(new BirthProbability()
-                        {
-                            Age = int.Parse(line[0]),
-                            NbrOfChildren = int.Parse(line[1]),
-                            P = double.Parse(line[3])
-                        });
-                    }
+                        Age = int.Parse(line[0]),
+                        NbrOfChildren = int.Parse(line[1]),
+                        P = double.Parse(line[3])
+                    });
                 }
-
-                return birthprob;
             }
-            List<DeathProbability> GetDeathProbabilities(string csvpath)
+
+            return birthprob;
+        }
+        public List<DeathProbability> GetDeathProbabilities(string csvpath)
+        {
+            List<DeathProbability> deathprob = new List<DeathProbability>();
+
+            using (StreamReader sr = new StreamReader(csvpath, Encoding.Default))
             {
-                List<DeathProbability> deathprob = new List<DeathProbability>();
-
-                using (StreamReader sr = new StreamReader(csvpath, Encoding.Default))
+                while (!sr.EndOfStream)
                 {
-                    while (!sr.EndOfStream)
+                    var line = sr.ReadLine().Split(';');
+                    deathprob.Add(new DeathProbability()
                     {
-                        var line = sr.ReadLine().Split(';');
-                        deathprob.Add(new DeathProbability()
-                        {
-                            Gender = (Gender)Enum.Parse(typeof(Gender), line[0]),
-                            Age = int.Parse(line[1]),
-                            P = double.Parse(line[2])
-                        });
-                    }
+                        Gender = (Gender)Enum.Parse(typeof(Gender), line[0]),
+                        Age = int.Parse(line[1]),
+                        P = double.Parse(line[2])
+                    });
                 }
+            }
 
-                return deathprob;
+            return deathprob;
+        }
+        private void SimStep(int year, Person person)
+        {
+            if (!person.IsAlive) return;
+
+            byte age = (byte)(year - person.BirthYear);
+
+            double pDeath = (from x in DeathProbabilities
+                             where x.Gender == person.Gender && x.Age == age
+                             select x.P).FirstOrDefault();
+
+            if (rnd.NextDouble() <= pDeath)
+                person.IsAlive = false;
+
+            if (person.IsAlive && person.Gender == Gender.Female)
+            {
+                double pBirth = (from x in BirthProbabilities
+                                 where x.Age == age
+                                 select x.P).FirstOrDefault();
+
+                if (rnd.NextDouble() <= pBirth)
+                {
+                    Person újszülött = new Person();
+                    újszülött.BirthYear = year;
+                    újszülött.NbrOfChildren = 0;
+                    újszülött.Gender = (Gender)(rnd.Next(1, 3));
+                    Population.Add(újszülött);
+                }
             }
         }
-
     }
 }
