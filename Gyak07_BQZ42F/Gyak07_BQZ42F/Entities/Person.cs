@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Gyak07_BQZ42F.Entities
 {
-    class Person
+    public class Person
     {
         public int BirthYear { get; set; }
         public Gender Gender { get; set; }
