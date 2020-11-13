@@ -28,7 +28,7 @@ namespace Gyak08_BQZ42F
             Factory = new BallFactory();
         }
 
-        private void createTimer_Tick(object sender, EventArgs e)
+        public void createTimer_Tick(object sender, EventArgs e)
         {
             var ball = Factory.CreateNew();
             _balls.Add(ball);
@@ -36,7 +36,7 @@ namespace Gyak08_BQZ42F
             mainPanel.Controls.Add(ball);
         }
 
-        private void conveyorTimer_Tick(object sender, EventArgs e)
+        public void conveyorTimer_Tick(object sender, EventArgs e)
         {
             var maxPosition = 0;
             foreach (var ball in _balls)
