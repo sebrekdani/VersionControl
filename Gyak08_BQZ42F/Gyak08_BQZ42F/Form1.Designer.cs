@@ -117,12 +117,12 @@
         #endregion
 
         private System.Windows.Forms.Panel mainPanel;
-        private System.Windows.Forms.Timer createTimer;
-        private System.Windows.Forms.Timer converyorTimer;
         private System.Windows.Forms.Label lblNext;
         private System.Windows.Forms.Button btnBall;
         private System.Windows.Forms.Button btnCar;
         private System.Windows.Forms.Button btnColor;
+        public System.Windows.Forms.Timer createTimer;
+        public System.Windows.Forms.Timer converyorTimer;
     }
 }
 
