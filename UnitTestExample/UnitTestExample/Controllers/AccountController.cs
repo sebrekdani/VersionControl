@@ -47,10 +47,38 @@ namespace UnitTestExample.Controllers
                 email, 
                 @"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
         }
-
         public bool ValidatePassword(string password)
         {
-            return Regex.IsMatch(password, "(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}$");
+            var vanKisbetu = new Regex(@"[a-z]+");
+            var vanNagybetu = new Regex(@"[A-Z]+");
+            var vanSzam = new Regex(@"[0-9]+");
+            var minKarkter = new Regex(@".{8,}");
+
+            if (!vanKisbetu.IsMatch(password))
+            {
+                return false;
+            }
+            if (!vanNagybetu.IsMatch(password))
+            {
+                return false;
+            }
+            if (!vanSzam.IsMatch(password))
+            {
+                return false;
+            }
+            if (!minKarkter.IsMatch(password))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
+
+        //public bool ValidatePassword(string password)
+        //{
+        //    return Regex.IsMatch(password, "(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}$");
+        //}
     }
 }
