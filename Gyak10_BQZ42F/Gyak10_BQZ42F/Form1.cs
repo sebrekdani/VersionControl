@@ -21,6 +21,7 @@ namespace Gyak10_BQZ42F
         int nbrOfStepsIncrement = 10;
         int generation = 1;
 
+        Brain winnerBrain = null;
 
         public Form1()
         {
@@ -33,6 +34,8 @@ namespace Gyak10_BQZ42F
 
             ga = gc.ActivateDisplay();
             this.Controls.Add(ga);
+
+            gc.GameOver += Gc_GameOver;
 
             for (int i = 0; i < populationSize; i++)
             {
