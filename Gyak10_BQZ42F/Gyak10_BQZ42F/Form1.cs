@@ -15,6 +15,7 @@ namespace Gyak10_BQZ42F
     {
         GameController gc = new GameController();
         GameArea ga;
+        
 
         public Form1()
         {
@@ -22,6 +23,8 @@ namespace Gyak10_BQZ42F
 
             ga = gc.ActivateDisplay();
             this.Controls.Add(ga);
+            //gc.AddPlayer();
+            //gc.Start(true);
         }
     }
 }
