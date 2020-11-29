@@ -26,16 +26,28 @@ namespace Gyak10_BQZ42F
         {
             InitializeComponent();
 
+            var playerList = from p in gc.GetCurrentPlayers()
+                             orderby p.GetFitness() descending
+                             select p;
+            var topPerformers = playerList.Take(populationSize / 2).ToList();
+
+            ga = gc.ActivateDisplay();
+            this.Controls.Add(ga);
+
             for (int i = 0; i < populationSize; i++)
             {
                 gc.AddPlayer(nbrOfSteps);
             }
             gc.Start();
-
-            ga = gc.ActivateDisplay();
-            this.Controls.Add(ga);
             //gc.AddPlayer();
             //gc.Start();
+        }
+        private void Gc_GameOver(object sender)
+        {
+            generation++;
+            label1.Text = string.Format(
+                "{0}. generáció",
+                generation);
         }
     }
 }
