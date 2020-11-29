@@ -26,10 +26,16 @@ namespace Gyak10_BQZ42F
         {
             InitializeComponent();
 
+            for (int i = 0; i < populationSize; i++)
+            {
+                gc.AddPlayer(nbrOfSteps);
+            }
+            gc.Start();
+
             ga = gc.ActivateDisplay();
             this.Controls.Add(ga);
             //gc.AddPlayer();
-            //gc.Start(true);
+            //gc.Start();
         }
     }
 }
